@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+
+  categories   Category[]
+  expenses     Expense[]
+  monthHistory MonthHistory[]
+  yearHistory  YearHistory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String
+  icon     String
+  userId   String
+  expenses Expense[]
+
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([name, userId])
+}
+
+model Expense {
+  id          String   @id @default(uuid())
+  amount      Int
+  description String
+  date        DateTime
+  userId      String
+  categoryId  String
+
+  user     User     @relation(fields: [userId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model MonthHistory {
+  day     Int
+  month   Int
+  year    Int
+  expense Int
+  userId  String
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@id([day, month, year, userId])
+}
+
+model YearHistory {
+  month   Int
+  year    Int
+  expense Int
+  userId  String
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@id([month, year, userId])
+}
