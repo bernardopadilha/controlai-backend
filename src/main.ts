@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 import { apiReference } from '@scalar/nestjs-api-reference';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
-const PORT = Number(process.env.PORT || 3000);
+const PORT = Number(process.env.PORT || 3333);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
