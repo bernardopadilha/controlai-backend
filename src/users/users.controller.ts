@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -7,6 +7,8 @@ import {
   ApiOkResponse,
   ApiOperation,
 } from '@nestjs/swagger';
+import { CurrentUser } from '../decorators/current-user.decorator';
+import type { User } from '../types/user.type';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 
@@ -46,9 +48,6 @@ export class UsersController {
       id: 'bc779472-5511-4791-94f0-9150642fe1f0',
       name: 'Bernardo Padilha',
       email: 'bernardoa.padilha@gmail.com',
-      phone: '(48) 99158-3678',
-      imageUrl:
-        'https://minhaimagem.amazonaws.com/users/avatars/userId-1755915844333.png',
     },
   })
   @ApiNotFoundResponse({
@@ -63,9 +62,18 @@ export class UsersController {
     return this.usersService.findOne(userId);
   }
 
-  @Get('/logged/in')
+  @Get('me')
   @ApiBearerAuth()
-  loggedUser(@Req() req: any) {
-    return this.usersService.findOne(req.user.userId as string);
+  @ApiOperation({ summary: 'Obtém dados do usuário logado' })
+  @ApiOkResponse({
+    description: 'Dados do usuário logado',
+    example: {
+      id: 'bc779472-5511-4791-94f0-9150642fe1f0',
+      name: 'Bernardo Padilha',
+      email: 'bernardoa.padilha@gmail.com',
+    },
+  })
+  getCurrentUser(@CurrentUser() user: User) {
+    return user;
   }
 }

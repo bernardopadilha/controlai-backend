@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -47,7 +43,7 @@ export class UsersService {
     });
 
     if (!user)
-      throw new NotFoundException(
+      throw new BadRequestException(
         'Não foi possível encontrar o usuário em nossa base de dados',
       );
 
