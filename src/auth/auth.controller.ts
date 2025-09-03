@@ -16,7 +16,7 @@ export class AuthController {
 
   @Post('sign-in')
   @Public()
-  @ApiOperation({ summary: 'Fazer login' })
+  @ApiOperation({ summary: 'Sign-in' })
   @ApiCreatedResponse({
     description: 'Login realizado com sucesso',
     example: {
@@ -29,9 +29,9 @@ export class AuthController {
     },
   })
   @ApiUnauthorizedResponse({
-    description: 'Credenciais inválidas',
+    description: 'Email ou senha incorretos',
     example: {
-      message: 'Credenciais inválidas',
+      message: 'Email ou senha incorretos',
       error: 'Unauthorized',
       statusCode: 401,
     },
@@ -42,9 +42,9 @@ export class AuthController {
 
   @Post('sign-up')
   @Public()
-  @ApiOperation({ summary: 'Fazer login' })
+  @ApiOperation({ summary: 'Sign-up' })
   @ApiCreatedResponse({
-    description: 'Login realizado com sucesso',
+    description: 'Conta criada com sucesso',
     example: {
       access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
       user: {
@@ -55,9 +55,9 @@ export class AuthController {
     },
   })
   @ApiBadRequestResponse({
-    description: 'Usuário já existe',
+    description: 'Email já cadastrado',
     example: {
-      message: 'Este email já é cadastrado',
+      message: 'Email já cadastrado',
       error: 'Bad Request',
       statusCode: 400,
     },
