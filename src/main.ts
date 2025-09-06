@@ -16,17 +16,11 @@ async function bootstrap() {
     origin:
       process.env.NODE_ENV === 'development'
         ? ['http://localhost:5173', 'http://127.0.0.1:5173']
-        : [/\.bernardopadilha\.com\.br$/],
+        : [
+          'https://controlai-frontend-qyzqldpp2-bernardo2905s-projects.vercel.app'
+        ],
     credentials: true,
   });
-
-  // app.useGlobalPipes(
-  //   new ValidationPipe({
-  //     whitelist: true,
-  //     forbidNonWhitelisted: true,
-  //     transform: true,
-  //   }),
-  // );
 
   const reflector = app.get(Reflector);
   app.useGlobalGuards(new JwtAuthGuard(reflector));
