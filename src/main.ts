@@ -17,7 +17,8 @@ async function bootstrap() {
       process.env.NODE_ENV === 'development'
         ? ['http://localhost:5173', 'http://127.0.0.1:5173']
         : [
-          'https://controlai-frontend-qyzqldpp2-bernardo2905s-projects.vercel.app'
+          'https://controlai-frontend.vercel.app',
+          'https://controlai-frontend-qyzqldpp2-bernardo2905s-projects.vercel.app',
         ],
     credentials: true,
   });
