@@ -6,7 +6,7 @@ import type { CreateExpenseDto } from './dto/create-expense.dto';
 
 @Injectable()
 export class ExpensesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(user: User, createExpenseDto: CreateExpenseDto) {
     const { date, amount, categoryId, description } = createExpenseDto;
@@ -131,7 +131,6 @@ export class ExpensesService {
       return {
         category: category?.name,
         categoryIcon: category?.icon,
-        type: 'expense',
         _sum: e._sum,
       };
     });
@@ -205,6 +204,49 @@ export class ExpensesService {
         },
       }),
     ]);
+  }
+
+  async getExpenseHistory(user: User, from: Date, to: Date) {
+    return await this.prisma.expense.findMany({
+      where: {
+        userId: user.id,
+        date: {
+          gte: from,
+          lte: to,
+        },
+      },
+      include: {
+        category: true,
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    });
+  }
+
+  async getHistoryPeriod(user: User) {
+    const result = await this.prisma.monthHistory.findMany({
+      where: {
+        userId: user.id,
+      },
+      select: {
+        year: true,
+      },
+      distinct: ['year'],
+      orderBy: [
+        {
+          year: 'asc',
+        },
+      ],
+    });
+
+    const years = result.map((el) => el.year);
+    if (years.length === 0) {
+      // Return the current year
+      return [new Date().getFullYear()];
+    }
+
+    return years;
   }
 
   async getHistoryData(

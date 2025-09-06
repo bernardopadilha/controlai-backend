@@ -23,7 +23,7 @@ import { ExpensesService } from './expenses.service';
 
 @Controller('expenses')
 export class ExpensesController {
-  constructor(private readonly expensesService: ExpensesService) {}
+  constructor(private readonly expensesService: ExpensesService) { }
 
   @ApiOperation({ summary: 'Create expense' })
   @ApiBearerAuth()
@@ -199,6 +199,28 @@ export class ExpensesController {
     );
   }
 
+  @ApiOperation({ summary: 'Get history periods' })
+  @ApiBearerAuth()
+  @Get('/history/periods')
+  getHistoryPeriod(@CurrentUser() user: User) {
+    return this.expensesService.getHistoryPeriod(user);
+  }
+
+  @ApiOperation({ summary: 'Get history expenses' })
+  @ApiBearerAuth()
+  @Get('/history')
+  getExpenseHistory(
+    @CurrentUser() user: User,
+    @Query('from') from: string,
+    @Query('to') to: string,
+  ) {
+    return this.expensesService.getExpenseHistory(
+      user,
+      new Date(from),
+      new Date(to),
+    );
+  }
+
   @ApiOperation({ summary: 'Get history expenses' })
   @ApiBearerAuth()
   @ApiOkResponse({
@@ -220,7 +242,7 @@ export class ExpensesController {
       statusCode: 401,
     },
   })
-  @Get('history')
+  @Get('history-data')
   getHistoryData(
     @CurrentUser() user: User,
     @Query('year') year: string,
