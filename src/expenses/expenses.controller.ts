@@ -11,6 +11,7 @@ import {
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
+  ApiBody,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
@@ -18,7 +19,7 @@ import {
 } from '@nestjs/swagger';
 import { CurrentUser } from '../decorators/current-user.decorator';
 import type { User } from '../types/user.type';
-import type { CreateExpenseDto } from './dto/create-expense.dto';
+import { CreateExpenseDto } from './dto/create-expense.dto';
 import { ExpensesService } from './expenses.service';
 
 @Controller('expenses')
@@ -26,6 +27,7 @@ export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) { }
 
   @ApiOperation({ summary: 'Create expense' })
+  @ApiBody({ type: CreateExpenseDto })
   @ApiBearerAuth()
   @ApiCreatedResponse({
     description: 'Expense criado com sucesso',

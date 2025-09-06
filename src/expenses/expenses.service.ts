@@ -377,8 +377,6 @@ async function getMonthHistoryData({
     },
   });
 
-  console.log('@@MONTH', month);
-
   if (!result || result.length === 0) return [];
 
   const history: HistoryData[] = [];

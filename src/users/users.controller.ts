@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
+  ApiBody,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -16,6 +17,7 @@ export class UsersController {
 
   @Post()
   @ApiBearerAuth()
+  @ApiBody({ type: CreateUserDto })
   @ApiOperation({ summary: 'Cria um novo usuário' })
   @ApiCreatedResponse({
     description: 'Usuário criado com sucesso',

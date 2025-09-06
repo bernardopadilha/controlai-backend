@@ -10,6 +10,7 @@ import {
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
+  ApiBody,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
@@ -18,13 +19,14 @@ import {
 import { CurrentUser } from '../decorators/current-user.decorator';
 import type { User } from '../types/user.type';
 import { CategoriesService } from './categories.service';
-import type { CreateCategoryDto } from './dto/create-category.dto';
-import type { UpdateCategoryDto } from './dto/update-category.dto';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Controller('categories')
 export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService) {}
+  constructor(private readonly categoriesService: CategoriesService) { }
   @ApiOperation({ summary: 'Create category' })
+  @ApiBody({ type: CreateCategoryDto })
   @ApiBearerAuth()
   @ApiCreatedResponse({
     description: 'Categoria criada com sucesso',
@@ -86,6 +88,7 @@ export class CategoriesController {
   }
 
   @ApiOperation({ summary: 'Update category' })
+  @ApiBody({ type: UpdateCategoryDto })
   @ApiBearerAuth()
   @ApiOkResponse({
     description: 'Categoria atualizada com sucesso',
