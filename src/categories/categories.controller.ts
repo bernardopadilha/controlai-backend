@@ -62,7 +62,7 @@ export class CategoriesController {
   @ApiOperation({ summary: 'Find all categories by userId' })
   @ApiBearerAuth()
   @ApiOkResponse({
-    description: 'Categorias retornado com sucesso',
+    description: 'Categorias retornadas com sucesso',
     example: [
       {
         id: 'a187ab2b-b97a-484b-8dc3-d4e9619ab9f9',
@@ -88,7 +88,7 @@ export class CategoriesController {
   @ApiOperation({ summary: 'Update category' })
   @ApiBearerAuth()
   @ApiOkResponse({
-    description: 'Categorias atualizado com sucesso',
+    description: 'Categoria atualizada com sucesso',
     example: [
       {
         id: 'a187ab2b-b97a-484b-8dc3-d4e9619ab9f9',

@@ -6,7 +6,7 @@ import type { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Injectable()
 export class CategoriesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(user: User, createCategoryDto: CreateCategoryDto) {
     const { icon, name } = createCategoryDto;
@@ -88,7 +88,7 @@ export class CategoriesService {
       );
     }
 
-    this.prisma.category.delete({
+    await this.prisma.category.delete({
       where: {
         id: categoryId,
       },
